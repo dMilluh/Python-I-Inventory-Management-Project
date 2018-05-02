@@ -26,12 +26,6 @@ class InventoryManagement(Frame):
         self.text.grid(row=3,column=1,columnspan=5, padx=15)
         self.scroll.config(command=self.text.yview)
 
-        self.btn3 = Button(self, text="Add Item", command=self.addItem)
-        self.btn3.grid(row=4, column = 1, padx=8, pady=10, sticky=E)
-
-        self.btn4 = Button(self, text="Edit Item", command=self.editItem)
-        self.btn4.grid(row=4, column = 2, padx=8, pady=10, sticky=W)
-
         Label(self, text="Item Number ").grid(row=6, column=0, padx=6, pady=6, sticky=E)
 
         self._box2 = StringVar()
@@ -55,6 +49,15 @@ class InventoryManagement(Frame):
         self._box5 = StringVar()
         self._input = Entry(self, width=20, textvariable=self._box5)
         self._input.grid(row=10, column=4, padx=8, pady=10)
+
+        self.btn3 = Button(self, text="Add Item", command=self.addItem)
+        self.btn3.grid(row=13, column=1, padx=5, pady=10, sticky=W)
+
+        self.btn4 = Button(self, text="Edit Item", command=self.editItem)
+        self.btn4.grid(row=13, column=2, padx=5, pady=10, sticky=W)
+
+        self.btn4 = Button(self, text="Delete Item", command=self.deleteItem)
+        self.btn4.grid(row=13, column=3, padx=5, pady=10)
 
     def addItem(self):
 
@@ -89,6 +92,9 @@ class InventoryManagement(Frame):
         self._box1.set('')
 
     def editItem(self):
+        return
+
+    def deleteItem(self):
         return
 
 def main():
