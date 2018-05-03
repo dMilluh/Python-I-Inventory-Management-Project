@@ -1,7 +1,5 @@
 from tkinter import *
 
-from tkinter import *
-
 class InventoryManagement(Frame):
     def __init__(self):
         Frame.__init__(self)
@@ -10,11 +8,11 @@ class InventoryManagement(Frame):
 
         Label(self, text="Search (Item Number): ").grid(row=0, column=1, padx=6, pady=6, sticky=E)
 
-        self._box1 = StringVar()
+        self._box1 = IntVar()
         self._input = Entry(self, width=20, textvariable=self._box1)
         self._input.grid(row=0, column=2, padx=8, pady=10, sticky=W)
 
-        self.btn1 = Button(self, text="Search", command=self.runningInventory)
+        self.btn1 = Button(self, text="Search", command=self.searchInventory)
         self.btn1.grid(row=0, column=3, padx=8,pady=10,sticky=W)
 
         self.btn2 = Button(self, text="Reset", command=self.clearSearch)
@@ -59,34 +57,43 @@ class InventoryManagement(Frame):
         self.btn4 = Button(self, text="Delete Item", command=self.deleteItem)
         self.btn4.grid(row=13, column=3, padx=5, pady=10)
 
+        self.text.delete(1.0, END)
+        self.text.insert(END,'Item Number' + '\t\t' + 'Item Name' + '\t\t' + 'On Hand' + '\t\t' + 'Price' + '\t\t')
+        self.text.insert(END, '------------------------------------------------------------')
+
     def addItem(self):
 
         items = []
-
-        searchVal = StringVar()
-        iNum = IntVar()
-        iName = StringVar()
-        oHand = IntVar()
-        iPrice = IntVar()
 
         iNum = self._box2.get()
         iName = self._box3.get()
         oHand = self._box4.get()
         iPrice = self._box5.get()
 
-        record = {'Item Number':iNum, 'Item Name':iName, 'On Hand':oHand, 'Item Price':iPrice}
+        record = {0:iNum, 1:iName, 2:oHand, 3:iPrice}
         items.append(record)
 
-        self.text.insert(END, iNum + '\t\t' + iName + '\t\t' + oHand + '\t\t' + iPrice + '\t\t')
+        for item in items:
+            self.text.insert(END, item[0] + '\t\t' + item[1] + '\t\t' + item[2] + '\t\t' + item[3] + '\t\t')
 
-        return
+        self._box2.set('')
+        self._box3.set('')
+        self._box4.set('')
+        self._box5.set('')
 
-    def runningInventory(self):
+        return items
+
+    def searchInventory(self, **items):
+
         self.text.delete(1.0, END)
         self.text.insert(END,'Item Number' + '\t\t' + 'Item Name' + '\t\t' + 'On Hand' + '\t\t' + 'Price' + '\t\t')
         self.text.insert(END, '------------------------------------------------------------')
 
-        return
+        searchVal = self._box1.get()
+
+        for item in items:
+            if (item[0] == searchVal):
+                self.text.insert(END, item[0] + '\t\t' + item[1] + '\t\t' + item[2] + '\t\t' + item[3] + '\t\t')
 
     def clearSearch(self):
         self._box1.set('')
