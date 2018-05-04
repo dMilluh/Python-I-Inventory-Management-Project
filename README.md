@@ -7,7 +7,7 @@ The data inputted is currenty volatile but in the future I would like to add a s
 
 Future Potential Updates:
 
--Database/text file to store Inventory
--Better sytling
--Multiple pages for each function (add/edit)
+- Database/text file to store Inventory
+- Better sytling
+- Multiple pages for each function (add/edit)
 
