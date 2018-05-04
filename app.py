@@ -7,7 +7,6 @@ from tkinter.ttk import *
 
 root = Tk()
 
-
 class InventoryManagement(Frame):
 
     # Creates constructor for main frame of application
@@ -17,7 +16,9 @@ class InventoryManagement(Frame):
         self.master.title('Inventory Management')
         self.grid()
         self.items = []
-        root.geometry("650x425")
+        root.geometry("650x450")
+
+        self.itemCount = len(self.items)
 
         # Lines 23 - 36 are top of application, search feature labels/entry/buttons
 
@@ -33,16 +34,18 @@ class InventoryManagement(Frame):
         self.btn1.grid(row=0, column=3, padx=8, pady=20, sticky=W)
 
         self.btn2 = Button(self, text='Reset', command=self.clearSearch)
-        self.btn2.grid(row=0, column=4, padx=8, pady=20, sticky=W)
+        self.btn2.grid(row=0, column=4, padx=4, pady=20, sticky=W)
 
         # Lines 40 - 45 is the main text area for inventory display
 
         self.scroll = Scrollbar(self)
-        self.scroll.grid(row=3, column=6)
+        self.scroll.grid(row=3, column=4)
         self.text = Text(self, width=60, height=10, wrap=WORD,
                          yscrollcommand=self.scroll.set)
         self.text.grid(row=3, column=0, columnspan=5, padx=20, pady=20)
         self.scroll.config(command=self.text.yview)
+
+        Label(self, text="Item Count: " + str(self.itemCount)).grid(row=4, column=0, pady=5, sticky=N)
 
         # Lines 49 - 75 are labels/entry boxes for new/edit item entry
 
@@ -94,9 +97,8 @@ class InventoryManagement(Frame):
         self.text.insert(END,
                          '------------------------------------------------------------'
                          )
-
+        self.text.configure(state="disabled")
         self._input1.focus_set()
-
 
     ''' addItem() function inserts headers into text area, grabs values from entry boxes 
         and appends them to a list of dictionaries if entry boxes are not empty.  It then prints
@@ -104,6 +106,8 @@ class InventoryManagement(Frame):
 
 
     def addItem(self):
+
+        self.text.configure(state="normal")
         self.text.delete(1.0, END)
         self.text.insert(END, 'Item Number' + '\t\t' + 'Item Name'
                          + '\t\t' + 'On Hand' + '\t\t' + 'Price'
@@ -141,6 +145,9 @@ class InventoryManagement(Frame):
         self._box5.set('')
         self._input1.focus_set()
 
+        self.text.configure(state="disabled")
+
+        return
 
     ''' searchInventory() function inserts headers into text area, gets value of search box entry and compares to
         list of dictionaries.  If the search box value matches the item number key,
@@ -148,6 +155,7 @@ class InventoryManagement(Frame):
 
 
     def searchInventory(self):
+        self.text.configure(state="normal")
         self.text.delete(1.0, END)
         self.text.insert(END, 'Item Number' + '\t\t' + 'Item Name'
                          + '\t\t' + 'On Hand' + '\t\t' + 'Price'
@@ -164,12 +172,12 @@ class InventoryManagement(Frame):
                                  + '\t\t' + item[2] + '\t\t' + item[3]
                                  + '\t\t')
 
+        self.text.configure(state="disabled")
 
     # Simple function attached to reset button to clear the search box
 
     def clearSearch(self):
         self._box1.set('')
-
 
     ''' editItem() function clears the entry boxes to prevent errors.  It then grabs the search box value and compares
         to the list of dictionaries.  If the dictionary's item number matches the value it inserts the value of the 
@@ -177,6 +185,7 @@ class InventoryManagement(Frame):
 
 
     def editItem(self):
+        self.text.configure(state="normal")
         self._box2.set('')
         self._box3.set('')
         self._box4.set('')
@@ -197,10 +206,13 @@ class InventoryManagement(Frame):
         self._box1.set('')
         self._input1.focus_set()
 
+        self.text.configure(state="disabled")
+
 
     # Simple function to delete dictionary with item number that matches the search box value
 
     def deleteItem(self):
+        self.text.configure(state="normal")
         self.text.delete(1.0, END)
         self.text.insert(END, 'Item Number' + '\t\t' + 'Item Name'
                          + '\t\t' + 'On Hand' + '\t\t' + 'Price'
@@ -222,7 +234,7 @@ class InventoryManagement(Frame):
                              + item[2] + '\t\t' + item[3] + '\t\t')
 
         self._box1.set('')
-
+        self.text.configure(state="disabled")
 
 def main():
     InventoryManagement().mainloop()
