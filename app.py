@@ -3,7 +3,6 @@
 '''
 
 from tkinter import *
-from tkinter.ttk import *
 
 root = Tk()
 
@@ -17,8 +16,6 @@ class InventoryManagement(Frame):
         self.grid()
         self.items = []
         root.geometry("650x450")
-
-        self.itemCount = len(self.items)
 
         # Lines 23 - 36 are top of application, search feature labels/entry/buttons
 
@@ -44,8 +41,6 @@ class InventoryManagement(Frame):
                          yscrollcommand=self.scroll.set)
         self.text.grid(row=3, column=0, columnspan=5, padx=20, pady=20)
         self.scroll.config(command=self.text.yview)
-
-        Label(self, text="Item Count: " + str(self.itemCount)).grid(row=4, column=0, pady=5, sticky=N)
 
         # Lines 49 - 75 are labels/entry boxes for new/edit item entry
 
@@ -144,6 +139,8 @@ class InventoryManagement(Frame):
         self._box4.set('')
         self._box5.set('')
         self._input1.focus_set()
+
+        Label(self, text="Item Count: " + str(len(self.items))).grid(row=4, column=0, pady=5, sticky=N)
 
         self.text.configure(state="disabled")
 
